@@ -6477,7 +6477,7 @@ MonoBehaviour:
   pact1: {fileID: 4919573478019705387}
   searchOfficePanel: {fileID: 685792848}
   searchScrollView: {fileID: 739064408}
-  officeSearchListPanelPrefab: {fileID: 1587589457132732956, guid: 0f386c1b80ba42144bfd2c4031630940, type: 3}
+  officeSearchListPanelPrefab: {fileID: 2832149593957647743, guid: 0f386c1b80ba42144bfd2c4031630940, type: 3}
 --- !u!1 &1285943097
 GameObject:
   m_ObjectHideFlags: 0
