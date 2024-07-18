@@ -2,3 +2,6 @@
 Library/ArtifactDB
 /Library
 /Temp
+/Library
+/Logs
+/obj/Debug
