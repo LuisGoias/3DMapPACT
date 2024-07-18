@@ -10,4 +10,16 @@ public class InformationObject : ScriptableObject
     public Sprite icon;
     public Sprite banner;
     public Material typeOfBuilding;
+
+
+    public void SetIcon(Sprite newSprite)
+    {
+        icon = newSprite;
+    }
+
+    public void SetBanner(Sprite newBanner)
+    {
+        banner = newBanner;
+    }
+
 }

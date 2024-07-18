@@ -9,9 +9,13 @@ using UnityEngine.UI;
 public class AdminManager : MonoBehaviour
 {
     [SerializeField] private Toggle adminToggle;
+    [SerializeField] private GameObject adminPanel;
     [SerializeField] private GameObject adminBanner;
     [SerializeField] private GameObject adminIcon;
 
+
+    [SerializeField] private GameObject helpBTN;
+    [SerializeField] private GameObject goBackBTN;
 
     private string path;
     private Image image;
@@ -107,19 +111,22 @@ public class AdminManager : MonoBehaviour
         else
         {
             Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            Sprite newSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            
+            Sprite newSprite = Sprite.Create(texture, 
+                new Rect(0.0f, 0.0f, texture.width, texture.height),
+                new Vector2(0.5f, 0.5f), 100.0f);
 
             if (adminBannerPicked)
             {
                 image = adminBanner.GetComponentInChildren<Image>();
                 image.sprite = newSprite;
-                building.banner = image.sprite;
+                building.SetBanner(newSprite);
             }
             else
             {
                 image = adminIcon.GetComponentInChildren<Image>();
                 image.sprite = newSprite;
-                building.icon = image.sprite;
+                building.SetIcon(newSprite);
             }
         }
     }
@@ -136,5 +143,12 @@ public class AdminManager : MonoBehaviour
         {
             building.description = gameObject.GetComponent<TMP_InputField>().text;
         }
+    }
+
+    public void onExitClicked()
+    {
+        adminPanel.SetActive(false);
+        helpBTN.SetActive(true);
+        goBackBTN.SetActive(true);
     }
 }
