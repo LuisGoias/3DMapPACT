@@ -10,3 +10,9 @@ Library/ArtifactDB
 Library/ArtifactDB
 .vs/3DMapPACT/FileContentIndex/d0ee4ab3-0a61-4c99-9001-6876f04cfa0f.vsidx
 /Library
+*.vsidx
+.vs/3DMapPACT/v17/.suo
+/Library
+Library/ArtifactDB
+Library/Bee/1900b0aEDbg.dag.json
+/Library/Bee
