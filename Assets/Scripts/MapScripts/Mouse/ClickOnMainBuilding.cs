@@ -92,7 +92,7 @@ public class ClickOnMainBuilding : MonoBehaviour
 
         if (insideBuilding != null)
         {
-
+            cameraManager.SetCurrentLocation(insideBuilding);
             Vector3 newPosition = insideCamera.transform.position;
             newPosition.x = insideBuilding.transform.position.x - cameraOffSet;
             insideCamera.transform.position = newPosition;

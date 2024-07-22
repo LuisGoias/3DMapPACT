@@ -12,6 +12,8 @@ public class GeneralCameraControls : MonoBehaviour
     [SerializeField] private float minZ = 0f;
     [SerializeField] private float maxZ = 0f;
 
+    [SerializeField] private float cameraSpeed;
+
     private Vector3 lastMousePosition;
 
     private MouseManager mouseManager;

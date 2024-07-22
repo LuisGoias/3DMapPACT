@@ -8,9 +8,10 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private GameObject insideCameraGameObject;
     [SerializeField] private GameObject insideCamera2GameObject;
 
-    private List<GameObject> activeCameras;
 
     private Vector3 insideCameraInactivePosition = new Vector3(50, 10, -2.14f);
+
+    private GameObject currentLocation;
 
 
     public bool isOutsideActive()
@@ -35,7 +36,7 @@ public class CameraManager : MonoBehaviour
         {
             insideCameraGameObject.SetActive(false);
             insideCameraGameObject.tag = "Untagged";
-            insideCameraGameObject.transform.position = insideCameraInactivePosition;
+            SetInsideCameraToInactivePosition();
         } else if (isInside2Active()) {
             insideCamera2GameObject.SetActive(false);
             insideCamera2GameObject.tag = "Untagged";
@@ -68,7 +69,7 @@ public class CameraManager : MonoBehaviour
         {
             insideCameraGameObject.SetActive(false);
             insideCameraGameObject.tag = "Untagged";
-            insideCameraGameObject.transform.position = insideCameraInactivePosition;
+            SetInsideCameraToInactivePosition();
         }
         else if (isOutsideActive())
         {
@@ -80,5 +81,26 @@ public class CameraManager : MonoBehaviour
         insideCamera2GameObject.tag = "MainCamera";
     }
 
+
+    public void SetInsideCameraPosition(Vector3 newPosition)
+    {
+        insideCameraGameObject.transform.position = newPosition;
+    }
+
+    public void SetInsideCameraToInactivePosition()
+    {
+        insideCameraGameObject.transform.position = insideCameraInactivePosition;
+    }
+
+
+    public void SetCurrentLocation(GameObject newLocation)
+    {
+        currentLocation = newLocation;
+    }
+
+    public GameObject GetCurrentLocation()
+    {
+        return currentLocation;
+    }
 
 }
