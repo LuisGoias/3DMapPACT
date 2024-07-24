@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\MapScripts\AdminManager.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Helper\HelperNextPhraseButtonLogic.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Zoom\ZoomButtonLogic.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\SearchManager.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\GoToMapScript.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Mouse\ClickOnStairs.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Button\CloseInfoLogic.cs" />

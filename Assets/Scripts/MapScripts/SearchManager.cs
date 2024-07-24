@@ -16,7 +16,6 @@ public class SearchManager : MonoBehaviour
     [SerializeField] private GameObject searchBTN;
     [SerializeField] private GameObject helpBTN;
     [SerializeField] private GameObject goBackZoomBTN;
-    [SerializeField] private GameObject adminToggle;
 
 
     private RectTransform searchScrollContentRectTransform;
@@ -149,13 +148,16 @@ public class SearchManager : MonoBehaviour
         {
             cameraManager.SetInsideCameraMain();
             Vector3 officePosition = foundOffice.transform.position;
-            cameraManager.SetInsideCameraPosition(officePosition);
+
+            Vector3 newPosition = cameraManager.getInsideCameraGO().transform.position;
+            newPosition.x = officePosition.x;
+            newPosition.z = officePosition.z;
+            cameraManager.SetInsideCameraPosition(newPosition);
             searchOfficePanel.SetActive(false);
 
             searchBTN.SetActive(true);
             helpBTN.SetActive(true);
             goBackZoomBTN.SetActive(true);
-            adminToggle.SetActive(true);
         }
     }
 
@@ -164,9 +166,11 @@ public class SearchManager : MonoBehaviour
         if (cameraManager.isInsideActive())
         {
             Vector3 location = cameraManager.GetCurrentLocation().transform.position;
-            cameraManager.SetInsideCameraPosition(location);
+            Vector3 newPosition = cameraManager.getInsideCameraGO().transform.position;
+            newPosition.x = location.x;
+            newPosition.z = location.z;
+            cameraManager.SetInsideCameraPosition(newPosition);
             goBackZoomBTN.SetActive(true);
-            adminToggle.SetActive(true);
         }
     }
 }

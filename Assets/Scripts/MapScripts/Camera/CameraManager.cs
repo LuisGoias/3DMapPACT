@@ -14,6 +14,11 @@ public class CameraManager : MonoBehaviour
     private GameObject currentLocation;
 
 
+    public GameObject getOutsideCameraGO () { return outsideCameraGameObject; }
+    public GameObject getInsideCameraGO () { return insideCameraGameObject; }
+    public GameObject getInside2CameraGO () { return insideCamera2GameObject; }
+
+
     public bool isOutsideActive()
     {
         return outsideCameraGameObject.activeSelf;

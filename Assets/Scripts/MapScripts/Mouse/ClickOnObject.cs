@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
@@ -24,12 +25,6 @@ public class ClickOnObject : MonoBehaviour
     [SerializeField] private List<GameObject> buildingCubes;
 
 
-    [SerializeField] private GameObject adminPanel;
-    [SerializeField] private GameObject adminBanner;
-    [SerializeField] private GameObject adminIcon;
-    [SerializeField] private GameObject adminTitle;
-    [SerializeField] private GameObject adminDescription;
-
     Ray ray;
     RaycastHit hit;
 
@@ -43,7 +38,6 @@ public class ClickOnObject : MonoBehaviour
 
     private HelperManager helperManager;
 
-    private AdminManager adminManager;
 
     void Start()
     {
@@ -60,11 +54,15 @@ public class ClickOnObject : MonoBehaviour
         
         helperManager = GameObject.Find("HelperManager").GetComponent<HelperManager>();
 
-        adminManager = GameObject.Find("AdminManager").GetComponent<AdminManager>();
     }
 
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return; // If the pointer is over a UI element, do nothing
+        }
+
         ray = insideCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
@@ -82,14 +80,7 @@ public class ClickOnObject : MonoBehaviour
                         helperManager.HideWhenObjClicked();
                     }
 
-                    if (adminManager.GetAdminStatus())
-                    {
-                        ShowInformationObjectAdmin();
-                    } else
-                    {
                         ShowInformationOfObject();
-                    }
-
                 }
             }
         }
@@ -121,7 +112,7 @@ public class ClickOnObject : MonoBehaviour
 
     }
 
-    void ShowInformationObjectAdmin()
+    /*void ShowInformationObjectAdmin()
     {
         goBackButton.SetActive(false);
         helpButton.SetActive(false);
@@ -135,7 +126,7 @@ public class ClickOnObject : MonoBehaviour
         adminDescription.GetComponentInChildren<TMP_InputField>().text = building.description;
 
         adminManager.building = getBuilding();
-    }
+    }*/
 
     public InformationObject getBuilding() { return building; }
 }

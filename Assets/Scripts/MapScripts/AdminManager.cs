@@ -8,52 +8,117 @@ using UnityEngine.UI;
 
 public class AdminManager : MonoBehaviour
 {
-    [SerializeField] private Toggle adminToggle;
-    [SerializeField] private GameObject adminPanel;
-    [SerializeField] private GameObject adminBanner;
-    [SerializeField] private GameObject adminIcon;
+    [SerializeField] private GameObject officeListPanel;
+    [SerializeField] private ScrollRect officeListScroll;
 
+    [SerializeField] private GameObject officeListedPrefab;
 
-    [SerializeField] private GameObject helpBTN;
-    [SerializeField] private GameObject goBackBTN;
+    [SerializeField] private GameObject officeInfoPanel;
+    [SerializeField] private GameObject officeBanner;
+    [SerializeField] private GameObject officeIcon;
+    [SerializeField] private GameObject officeInfoTitle;
+    [SerializeField] private GameObject officeInfoDescription;
+
+    private List<InformationObject> informationObjects = new List<InformationObject>();
 
     private string path;
     private Image image;
 
-    private bool adminEnabled = false;
 
     private bool adminBannerPicked = false;
 
     private bool adminTitleChanged = false;
 
-    public InformationObject building;
+    private InformationObject buildingToChange;
 
+
+    private RectTransform officeContentRectTransform;
 
     // Start is called before the first frame update
     void Start()
     {
+        officeContentRectTransform = officeListScroll.content;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (adminToggle.isOn)
-        {
-            adminEnabled = true;
-        }
-        else
-        {
-            adminEnabled = false;
-        }
+
 
     }
 
-    public bool GetAdminStatus()
+    #region List Office
+    public void ClickListOfficeChange()
     {
-        return adminEnabled;
+        string folderPath = "Assets/Objects/Locations"; // Replace with your folder path
+        informationObjects = LoadAllScriptableObjects(folderPath);
+
+        foreach (var obj in informationObjects)
+        {
+            Debug.Log(obj.name);
+        }
+
+        PopulateScrollWithOffices(officeContentRectTransform);
     }
 
+    private static List<InformationObject> LoadAllScriptableObjects(string path)
+    {
+        // Get all asset paths from the folder
+        string[] assetPaths = AssetDatabase.FindAssets("t:" + typeof(InformationObject).Name, new[] { path });
+        List<InformationObject> scriptableObjects = new List<InformationObject>();
+
+        // Load each asset and add to the list
+        foreach (string assetPath in assetPaths)
+        {
+            string fullPath = AssetDatabase.GUIDToAssetPath(assetPath);
+            InformationObject obj = AssetDatabase.LoadAssetAtPath<InformationObject>(fullPath);
+            if (obj != null)
+            {
+                scriptableObjects.Add(obj);
+            }
+        }
+
+        return scriptableObjects;
+    }
+
+
+    private void PopulateScrollWithOffices(RectTransform rectTransform)
+    {
+        for (int i = 0; i < informationObjects.Count; i++)
+        {
+            GameObject newOfficeSearchGO = Instantiate(officeListedPrefab, rectTransform);
+
+            InformationObject currentObject = informationObjects[i];
+
+            newOfficeSearchGO.transform.Find("OfficeImage")
+                .GetComponent<Image>().sprite = currentObject.icon;
+
+            newOfficeSearchGO.transform.Find("OfficeTitle")
+                .GetComponent<TextMeshProUGUI>().text = currentObject.title;
+
+            newOfficeSearchGO.transform.Find("OfficeImage")
+                .GetComponent<Button>().onClick
+                .AddListener(delegate { OfficeImageClick(currentObject); });
+        }
+    }
+
+    private void OfficeImageClick(InformationObject informationObject)
+    {
+        buildingToChange = informationObject;
+        officeListPanel.SetActive(false);
+        officeInfoPanel.SetActive(true);
+
+        officeBanner.GetComponent<Image>().sprite = buildingToChange.banner;
+        officeIcon.GetComponent<Image>().sprite = buildingToChange.icon;
+        officeInfoTitle.GetComponent<TMP_InputField>().text = buildingToChange.title;
+        officeInfoDescription.GetComponent<TMP_InputField>().text = buildingToChange.description;
+    }
+
+
+    #endregion
+
+    #region Change Office Details
     private void SetAdminBannerPicked(GameObject gameObject)
     {
         if (gameObject.name == "InfromationBannerADM")
@@ -118,15 +183,15 @@ public class AdminManager : MonoBehaviour
 
             if (adminBannerPicked)
             {
-                image = adminBanner.GetComponentInChildren<Image>();
+                image = officeBanner.GetComponentInChildren<Image>();
                 image.sprite = newSprite;
-                building.SetBanner(newSprite);
+                buildingToChange.SetBanner(newSprite);
             }
             else
             {
-                image = adminIcon.GetComponentInChildren<Image>();
+                image = officeIcon.GetComponentInChildren<Image>();
                 image.sprite = newSprite;
-                building.SetIcon(newSprite);
+                buildingToChange.SetIcon(newSprite);
             }
         }
     }
@@ -138,17 +203,11 @@ public class AdminManager : MonoBehaviour
 
         if (adminTitleChanged)
         {
-            building.title = gameObject.GetComponent<TMP_InputField>().text;
+            buildingToChange.title = gameObject.GetComponent<TMP_InputField>().text;
         } else
         {
-            building.description = gameObject.GetComponent<TMP_InputField>().text;
+            buildingToChange.description = gameObject.GetComponent<TMP_InputField>().text;
         }
     }
-
-    public void onExitClicked()
-    {
-        adminPanel.SetActive(false);
-        helpBTN.SetActive(true);
-        goBackBTN.SetActive(true);
-    }
+    #endregion
 }

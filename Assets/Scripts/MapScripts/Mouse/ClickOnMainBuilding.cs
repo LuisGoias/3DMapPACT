@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ClickOnMainBuilding : MonoBehaviour
@@ -22,6 +23,7 @@ public class ClickOnMainBuilding : MonoBehaviour
     [SerializeField] private GameObject insideCamera;
     [SerializeField] private GameObject goBackButton;
     [SerializeField] private GameObject adminToggle;
+    [SerializeField] private GameObject locationTMP;
 
 
     private MouseManager mouseManager;
@@ -95,12 +97,21 @@ public class ClickOnMainBuilding : MonoBehaviour
             cameraManager.SetCurrentLocation(insideBuilding);
             Vector3 newPosition = insideCamera.transform.position;
             newPosition.x = insideBuilding.transform.position.x - cameraOffSet;
-            insideCamera.transform.position = newPosition;
+            cameraManager.SetInsideCameraPosition(newPosition);
 
             cameraManager.SetInsideCameraMain();
 
+            if(insideBuilding.name == "PACT1Inside")
+            {
+                locationTMP.GetComponent<TextMeshProUGUI>().text = clickedBuilding.name + ".0 (Piso 0)";
+            } else
+            {
+                locationTMP.GetComponent<TextMeshProUGUI>().text = clickedBuilding.name + ".0";
+            }
+
             goBackButton.SetActive(true);
             adminToggle.SetActive(true);
+            locationTMP.SetActive(true);
 
             //outsideCameraGameObject.GetComponent<Camera>().orthographicSize = 5;
         }
