@@ -22,7 +22,6 @@ public class ClickOnMainBuilding : MonoBehaviour
 
     [SerializeField] private GameObject insideCamera;
     [SerializeField] private GameObject goBackButton;
-    [SerializeField] private GameObject adminToggle;
     [SerializeField] private GameObject locationTMP;
 
 
@@ -110,7 +109,6 @@ public class ClickOnMainBuilding : MonoBehaviour
             }
 
             goBackButton.SetActive(true);
-            adminToggle.SetActive(true);
             locationTMP.SetActive(true);
 
             //outsideCameraGameObject.GetComponent<Camera>().orthographicSize = 5;

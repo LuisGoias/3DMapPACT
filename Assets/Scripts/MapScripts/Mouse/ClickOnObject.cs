@@ -112,21 +112,6 @@ public class ClickOnObject : MonoBehaviour
 
     }
 
-    /*void ShowInformationObjectAdmin()
-    {
-        goBackButton.SetActive(false);
-        helpButton.SetActive(false);
-        clickedOnObject = true;
-
-        adminPanel.SetActive(true);
-
-        adminBanner.GetComponentInChildren<Image>().sprite = building.banner;
-        adminIcon.GetComponentInChildren<Image>().sprite = building.icon;
-        adminTitle.GetComponentInChildren<TMP_InputField>().text = building.title;
-        adminDescription.GetComponentInChildren<TMP_InputField>().text = building.description;
-
-        adminManager.building = getBuilding();
-    }*/
 
     public InformationObject getBuilding() { return building; }
 }

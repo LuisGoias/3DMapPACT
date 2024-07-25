@@ -5,6 +5,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.IO;
+using SFB;
+using System;
 
 public class AdminManager : MonoBehaviour
 {
@@ -146,9 +149,22 @@ public class AdminManager : MonoBehaviour
     public void OpenExplorer(GameObject gameObject)
     {
         SetAdminBannerPicked(gameObject);
-        path = EditorUtility.OpenFilePanel("Overwrite with png", "", "png");
+        //TODO
+        // Open file with filter
+        var extensions = new[] {
+            new ExtensionFilter("Image Files", "png", "jpg", "jpeg" )
+        };
+        var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", extensions, true);
+        
+        path = "";
+        foreach (var p in paths)
+        {
+            path += p + "\n";
+        }
+
         GetImage();
     }
+
 
     void GetImage()
     {
