@@ -33,7 +33,7 @@ public class OfficeListingManager : MonoBehaviour
         {
             if(child.GetComponent<ClickOnObject>() != null)
             {
-                InformationObject buildingObject = 
+                InformationSerialize buildingObject = 
                     child.GetComponent<ClickOnObject>().getBuilding();
                 images.Add(buildingObject.icon);
             }

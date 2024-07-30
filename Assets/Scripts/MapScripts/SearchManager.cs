@@ -67,10 +67,10 @@ public class SearchManager : MonoBehaviour
         {
             if (child.GetComponent<ClickOnObject>() != null)
             {
-                InformationObject buildingObject = child.GetComponent<ClickOnObject>().getBuilding();
+                InformationSerialize buildingObject = child.GetComponent<ClickOnObject>().getBuilding();
                 images.Add(buildingObject.icon);
                 titles.Add(buildingObject.title);
-                objectNames.Add(buildingObject.name);
+                objectNames.Add(buildingObject.gameObjectName);
             }
         }
 

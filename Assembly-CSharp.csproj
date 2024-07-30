@@ -58,38 +58,49 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.6f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MapScripts\OfficeListingManager.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Helper\Helper.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Camera\CameraManager.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Zoom\ZoomLogic.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Mouse\ClickOnMainBuilding.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\InformationObject.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Helper\HelpButtonLogic.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Button\GoBackButtonLogic.cs" />
-    <Compile Include="Assets\Scripts\LevelManager.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\AdminManager.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Helper\HelperNextPhraseButtonLogic.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Zoom\ZoomButtonLogic.cs" />
     <Compile Include="Assets\Scripts\MapScripts\SearchManager.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\GoToMapScript.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\OfficeListingManager.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Mouse\ClickOnStairs.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Helper\Helper.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Button\CloseInfoLogic.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileText.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Camera\CameraManager.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Mouse\MouseManager.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\RectPicker.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Mouse\ClickOnObject.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileImage.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Zoom\ZoomLogic.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Mouse\ClickOnMainBuilding.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\InformationObject.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\HsbPicker.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\InformationSerialize.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Helper\HelpButtonLogic.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Helper\HelperManager.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\InputHex.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\ColorPicker.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\FileManager.cs" />
+    <Compile Include="Assets\Scripts\ColorPickerManager.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Button\GoBackButtonLogic.cs" />
+    <Compile Include="Assets\Scripts\LevelManager.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\ColorSlider.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\InputChannel.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Camera\GeneralCameraControls.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\PointerTrackerArea.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\AdminManager.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Helper\HelperNextPhraseButtonLogic.cs" />
+    <Compile Include="Assets\ColorPicker\Scripts\InputColorChannels.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -747,9 +758,6 @@
     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
       <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
     </Reference>
@@ -774,11 +782,14 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>

@@ -22,7 +22,14 @@ public class AdminManager : MonoBehaviour
     [SerializeField] private GameObject officeInfoTitle;
     [SerializeField] private GameObject officeInfoDescription;
 
-    private List<InformationObject> informationObjects = new List<InformationObject>();
+    [SerializeField] private GameObject materialListPanel;
+    [SerializeField] private ScrollRect materialListScrollView;
+    [SerializeField] private GameObject materialPanelPrefab;
+
+    [SerializeField] private GameObject colorPickerPanel;
+
+    private List<InformationSerialize> informationOffices = new List<InformationSerialize>();
+    private List<Material> materials = new List<Material>();
 
     private string path;
     private Image image;
@@ -32,16 +39,25 @@ public class AdminManager : MonoBehaviour
 
     private bool adminTitleChanged = false;
 
-    private InformationObject buildingToChange;
+    private InformationSerialize buildingToChange;
 
 
     private RectTransform officeContentRectTransform;
+    private RectTransform materiaContentRectTransform;
+
+
+    private ColorPickerManager colorPickerManager;
+
+    private FileManager fileManager;
 
     // Start is called before the first frame update
     void Start()
     {
         officeContentRectTransform = officeListScroll.content;
+        materiaContentRectTransform = materialListScrollView.content;
 
+        colorPickerManager = GameObject.Find("ColorPickerManager").GetComponent<ColorPickerManager>();
+        fileManager = GameObject.Find("FileManager").GetComponent<FileManager>(); 
     }
 
     // Update is called once per frame
@@ -54,18 +70,12 @@ public class AdminManager : MonoBehaviour
     #region List Office
     public void ClickListOfficeChange()
     {
-        string folderPath = "Assets/Objects/Locations"; // Replace with your folder path
-        informationObjects = LoadAllScriptableObjects(folderPath);
-
-        foreach (var obj in informationObjects)
-        {
-            Debug.Log(obj.name);
-        }
-
+        //string folderPath = "Assets/Objects/Locations"; // Replace with your folder path
+        informationOffices = fileManager.LoadInformation();
         PopulateScrollWithOffices(officeContentRectTransform);
     }
 
-    private static List<InformationObject> LoadAllScriptableObjects(string path)
+   /* private static List<InformationObject> LoadAllScriptableObjects(string path)
     {
         // Get all asset paths from the folder
         string[] assetPaths = AssetDatabase.FindAssets("t:" + typeof(InformationObject).Name, new[] { path });
@@ -83,16 +93,16 @@ public class AdminManager : MonoBehaviour
         }
 
         return scriptableObjects;
-    }
+    }*/
 
 
     private void PopulateScrollWithOffices(RectTransform rectTransform)
     {
-        for (int i = 0; i < informationObjects.Count; i++)
+        for (int i = 0; i < informationOffices.Count; i++)
         {
             GameObject newOfficeSearchGO = Instantiate(officeListedPrefab, rectTransform);
 
-            InformationObject currentObject = informationObjects[i];
+            InformationSerialize currentObject = informationOffices[i];
 
             newOfficeSearchGO.transform.Find("OfficeImage")
                 .GetComponent<Image>().sprite = currentObject.icon;
@@ -106,7 +116,7 @@ public class AdminManager : MonoBehaviour
         }
     }
 
-    private void OfficeImageClick(InformationObject informationObject)
+    private void OfficeImageClick(InformationSerialize informationObject)
     {
         buildingToChange = informationObject;
         officeListPanel.SetActive(false);
@@ -116,6 +126,28 @@ public class AdminManager : MonoBehaviour
         officeIcon.GetComponent<Image>().sprite = buildingToChange.icon;
         officeInfoTitle.GetComponent<TMP_InputField>().text = buildingToChange.title;
         officeInfoDescription.GetComponent<TMP_InputField>().text = buildingToChange.description;
+    }
+
+
+    public void OnOfficeInfoClickBack()
+    {
+        for(int i = 0; i < informationOffices.Count; i++)
+        {
+            if (informationOffices[i].gameObjectName == buildingToChange.gameObjectName)
+            {
+                informationOffices[i] = buildingToChange;
+
+            }
+        }
+        fileManager.SaveInformation(informationOffices);
+
+        for (int i = 0; i < informationOffices.Count;i++)
+        {
+            Debug.Log(i + ":");
+            Debug.Log(informationOffices[i].gameObjectName);
+            Debug.Log(informationOffices[i].title);
+            Debug.Log(informationOffices[i].description);
+        }
     }
 
 
@@ -149,7 +181,7 @@ public class AdminManager : MonoBehaviour
     public void OpenExplorer(GameObject gameObject)
     {
         SetAdminBannerPicked(gameObject);
-        //TODO
+
         // Open file with filter
         var extensions = new[] {
             new ExtensionFilter("Image Files", "png", "jpg", "jpeg" )
@@ -192,16 +224,35 @@ public class AdminManager : MonoBehaviour
         else
         {
             Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            
-            Sprite newSprite = Sprite.Create(texture, 
+
+            /*Sprite newSprite = Sprite.Create(texture,
                 new Rect(0.0f, 0.0f, texture.width, texture.height),
+                new Vector2(0.5f, 0.5f), 100.0f);*/
+
+            path = path.Trim();
+
+            var fileData = File.ReadAllBytes(path);
+
+
+            var testTexture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            testTexture.LoadImage(fileData);
+
+
+
+            Sprite newSprite = Sprite.Create(testTexture,
+                new Rect(0.0f, 0.0f, testTexture.width, testTexture.height),
                 new Vector2(0.5f, 0.5f), 100.0f);
 
             if (adminBannerPicked)
             {
                 image = officeBanner.GetComponentInChildren<Image>();
                 image.sprite = newSprite;
-                buildingToChange.SetBanner(newSprite);
+                if(image.sprite != null)
+                {
+                    Debug.Log("yay");
+                    Debug.Log(image.sprite);
+                    buildingToChange.SetBanner(image.sprite);
+                }
             }
             else
             {
@@ -225,5 +276,71 @@ public class AdminManager : MonoBehaviour
             buildingToChange.description = gameObject.GetComponent<TMP_InputField>().text;
         }
     }
+    #endregion
+
+    #region List Material
+    
+    public void ClickListMaterial()
+    {
+        string folderPath = "Assets/Materials"; // Replace with your folder path
+        materials = LoadAllMaterials(folderPath);
+
+        foreach (var obj in materials)
+        {
+            Debug.Log(obj.name);
+        }
+
+        PopulateScrollWithMaterials(materiaContentRectTransform);
+    }
+
+    private static List<Material> LoadAllMaterials(string path)
+    {
+        // Get all asset paths from the folder
+        string[] assetPaths = AssetDatabase.FindAssets("t:" + typeof(Material).Name, new[] { path });
+        List<Material> materialsFound = new List<Material>();
+
+        // Load each asset and add to the list
+        foreach (string assetPath in assetPaths)
+        {
+            string fullPath = AssetDatabase.GUIDToAssetPath(assetPath);
+            Material obj = AssetDatabase.LoadAssetAtPath<Material>(fullPath);
+            if (obj != null)
+            {
+                materialsFound.Add(obj);
+            }
+        }
+
+        return materialsFound;
+    }
+
+    private void PopulateScrollWithMaterials(RectTransform rectTransform)
+    {
+        for (int i = 0; i < materials.Count; i++)
+        {
+            GameObject newMaterialGO = Instantiate(materialPanelPrefab, rectTransform);
+
+            Material currentMaterial = materials[i];
+
+
+            newMaterialGO.transform.Find("ColorImage")
+                .GetComponent<Image>().color = materials[i].color;
+
+            newMaterialGO.transform.Find("ColorImage")
+                .GetComponent<Button>().onClick
+                .AddListener(delegate { OnMaterialClick(currentMaterial); });
+
+            newMaterialGO.transform.Find("MaterialName")
+                .GetComponent<TextMeshProUGUI>().text = materials[i].name;
+        }
+    }
+
+    private void OnMaterialClick(Material materialChosen)
+    {
+        GameObject.Find("BuildingCube").GetComponent<MeshRenderer>().material = materialChosen;
+        materialListPanel.SetActive(false);
+        colorPickerPanel.SetActive(true);
+        colorPickerManager.SetChoseMaterial(materialChosen);
+    }
+
     #endregion
 }

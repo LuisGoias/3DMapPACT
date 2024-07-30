@@ -25,6 +25,9 @@ public class ClickOnObject : MonoBehaviour
     [SerializeField] private List<GameObject> buildingCubes;
 
 
+    public InformationSerialize building;
+
+
     Ray ray;
     RaycastHit hit;
 
@@ -33,7 +36,6 @@ public class ClickOnObject : MonoBehaviour
     private Vector3 originalPosition;
     private Quaternion originalRotation;
 
-    public InformationObject building;
 
 
     private HelperManager helperManager;
@@ -73,7 +75,7 @@ public class ClickOnObject : MonoBehaviour
                     insideCamera.transform.position = originalPosition;
                     insideCamera.transform.rotation = originalRotation;
                 }
-                else if (hit.collider.transform.parent.gameObject.name == building.name)
+                else if (hit.collider.transform.parent.gameObject.name == building.gameObjectName)
                 {
                     if (helperManager.isHelperTalking())
                     {
@@ -113,5 +115,7 @@ public class ClickOnObject : MonoBehaviour
     }
 
 
-    public InformationObject getBuilding() { return building; }
+    public InformationSerialize getBuilding() { return building; }
+
+    public void setBuilding(InformationSerialize newBuilding) { building = newBuilding; }
 }

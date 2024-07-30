@@ -2607,6 +2607,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 505958728}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f4a962386cfdaf45a040b444158e1a5, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.title
+      value: Goma
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.banner
+      value: 
+      objectReference: {fileID: 21300000, guid: ae4f2827c7a3b324eb4da005312a899d, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: adminDescription
       value: 
       objectReference: {fileID: 0}
@@ -2627,9 +2639,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 563874279}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.description
+      value: ttt
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: informationDescription
       value: 
       objectReference: {fileID: 2142302126}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.gameObjectName
+      value: Inside2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.typeOfBuilding
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ca482d8a2b4803459d680a2bf146031, type: 2}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: buildingCubes.Array.size
       value: 1
@@ -4824,6 +4848,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 505958728}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: da74ea7fcc3c85b4ba6cfa7a516c1fc6, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.title
+      value: dstsolar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.banner
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e46986c3dea7184b998bf2109fed31e, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: adminDescription
       value: 
       objectReference: {fileID: 0}
@@ -4844,9 +4880,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 563874279}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.description
+      value: dst
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: informationDescription
       value: 
       objectReference: {fileID: 2142302126}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.gameObjectName
+      value: Inside3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.typeOfBuilding
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ca482d8a2b4803459d680a2bf146031, type: 2}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: buildingCubes.Array.size
       value: 1
@@ -5206,7 +5254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   insideCamera: {fileID: 505958726}
   goBackButton: {fileID: 1706397068}
-  adminToggle: {fileID: 0}
   locationTMP: {fileID: 1480649621}
 --- !u!114 &963194230
 MonoBehaviour:
@@ -6818,7 +6865,6 @@ MonoBehaviour:
   searchBTN: {fileID: 1619115656}
   helpBTN: {fileID: 1457627245}
   goBackZoomBTN: {fileID: 1706397068}
-  adminToggle: {fileID: 0}
 --- !u!1 &1291798410
 GameObject:
   m_ObjectHideFlags: 0
@@ -7203,6 +7249,7 @@ Transform:
   - {fileID: 1717035897}
   - {fileID: 1186184384}
   - {fileID: 1276962077}
+  - {fileID: 1519693639}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1457627245
@@ -7831,6 +7878,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490546976}
   m_CullTransparentMesh: 1
+--- !u!1 &1519693638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1519693639}
+  - component: {fileID: 1519693640}
+  m_Layer: 0
+  m_Name: FileManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1519693639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519693638}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1432810938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1519693640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519693638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2030aeb346093049a44e4f3bf22d3ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildings:
+  - {fileID: 4919573478019705387}
 --- !u!1 &1536254604
 GameObject:
   m_ObjectHideFlags: 0
@@ -10184,6 +10277,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 505958728}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: c8fe262c45ad86749ba2124eddf138bb, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.title
+      value: IG&H
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.banner
+      value: 
+      objectReference: {fileID: 21300000, guid: e9de615f46aa7bc42971beebc5d0bbe0, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: adminDescription
       value: 
       objectReference: {fileID: 0}
@@ -10204,9 +10309,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 563874279}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.description
+      value: Testtt
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: informationDescription
       value: 
       objectReference: {fileID: 2142302126}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.gameObjectName
+      value: Inside1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.typeOfBuilding
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ca482d8a2b4803459d680a2bf146031, type: 2}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: buildingCubes.Array.size
       value: 1
@@ -11655,6 +11772,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 505958728}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 466817deba8a7fb4fb5eafc06113a67d, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.title
+      value: Restaurante Galhetas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.banner
+      value: 
+      objectReference: {fileID: 21300000, guid: d4989676ca9e684448d52800583e4a89, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: adminDescription
       value: 
       objectReference: {fileID: 0}
@@ -11667,6 +11796,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2130822090}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: buildingTest.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 466817deba8a7fb4fb5eafc06113a67d, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: informationBanner
       value: 
       objectReference: {fileID: 299615656}
@@ -11675,12 +11808,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 563874279}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: buildingTest.title
+      value: Restaurante Galhetas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: buildingTest.banner
+      value: 
+      objectReference: {fileID: 21300000, guid: d4989676ca9e684448d52800583e4a89, type: 3}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.description
+      value: Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: informationDescription
       value: 
       objectReference: {fileID: 2142302126}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.gameObjectName
+      value: Restaurant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: building.typeOfBuilding
+      value: 
+      objectReference: {fileID: 2100000, guid: b713e690193cfb04bb8788725c19aa7f, type: 2}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: buildingCubes.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: buildingTest.description
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: buildingCubes.Array.data[0]
@@ -11690,6 +11847,10 @@ PrefabInstance:
       propertyPath: buildingCubes.Array.data[1]
       value: 
       objectReference: {fileID: 1749102764}
+    - target: {fileID: 3029950409966132490, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
+      propertyPath: buildingTest.typeOfBuilding
+      value: 
+      objectReference: {fileID: 2100000, guid: b713e690193cfb04bb8788725c19aa7f, type: 2}
     - target: {fileID: 4058977266051188905, guid: 687109cd61ec21642baa6f8655e54c0d, type: 3}
       propertyPath: m_Name
       value: Restaurant
