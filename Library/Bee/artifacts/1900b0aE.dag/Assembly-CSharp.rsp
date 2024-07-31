@@ -366,6 +366,7 @@
 "Assets/Scripts/MapScripts/Helper/Helper.cs"
 "Assets/Scripts/MapScripts/Helper/HelperManager.cs"
 "Assets/Scripts/MapScripts/Helper/HelperNextPhraseButtonLogic.cs"
+"Assets/Scripts/MapScripts/Helper/HelperSerialize.cs"
 "Assets/Scripts/MapScripts/InformationObject.cs"
 "Assets/Scripts/MapScripts/InformationSerialize.cs"
 "Assets/Scripts/MapScripts/Mouse/ClickOnMainBuilding.cs"

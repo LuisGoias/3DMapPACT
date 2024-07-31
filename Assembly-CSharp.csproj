@@ -75,6 +75,7 @@
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Camera\CameraManager.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
+    <Compile Include="Assets\Scripts\MapScripts\Helper\HelperSerialize.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Mouse\MouseManager.cs" />
     <Compile Include="Assets\ColorPicker\Scripts\RectPicker.cs" />
     <Compile Include="Assets\Scripts\MapScripts\Mouse\ClickOnObject.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="Assets\Scripts\MapScripts\Camera\GeneralCameraControls.cs" />
     <Compile Include="Assets\ColorPicker\Scripts\PointerTrackerArea.cs" />
     <Compile Include="Assets\Scripts\MapScripts\AdminManager.cs" />
-    <Compile Include="Assets\Scripts\MapScripts\Helper\HelperNextPhraseButtonLogic.cs" />
     <Compile Include="Assets\ColorPicker\Scripts\InputColorChannels.cs" />
   </ItemGroup>
   <ItemGroup>

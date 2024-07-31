@@ -3,29 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HelperManager : MonoBehaviour
 {
     [SerializeField] private GameObject helperImage;
     [SerializeField] private GameObject helperPanel;
-    [SerializeField] private GameObject helperText;
+
+
+    [SerializeField] private ScrollRect helperQuestionScrollView;
+    [SerializeField] private GameObject questionPanelPrefab;
+
+
+    [SerializeField] private GameObject questionTitle;
+    [SerializeField] private GameObject anwserDescription;
+    [SerializeField] private GameObject okBTN;
 
     private float targetYPosition = 55f;
     private Vector3 initialPosition;
-    public Helper helper;
+
+    //public Helper helper;
+
+    public HelperSerialize helper;
 
     public bool reachedPosition = false;
     private Coroutine hideCoroutine;
 
     private List<string> phrasesSaid = new List<string>();
 
-
+    private RectTransform helperQuestionsContentRectTransform;
 
     // Start is called before the first frame update
     void Start()
     {
         initialPosition = helperImage.transform.position;
+        helperQuestionsContentRectTransform = helperQuestionScrollView.content;
 
+        PopulateScrollWithQuestions(helperQuestionsContentRectTransform);
     }
 
 
@@ -37,34 +51,8 @@ public class HelperManager : MonoBehaviour
         {
             helperPanel.SetActive(true);
             reachedPosition = true;
-            ShowPhrase();
         }
     }
-
-    public void ShowPhrase()
-    {
-        if (hideCoroutine != null)
-        {
-            StopCoroutine(hideCoroutine);
-        }
-
-        if (!helper.phrases.Any())
-        {
-            helper.setPhrases(phrasesSaid);
-            phrasesSaid.Clear();
-        }
-
-
-        int phraseChosen = Random.Range(0, helper.phrases.Count);
-        string chosenPhrase = helper.phrases[phraseChosen];
-
-        helperText.GetComponent<TextMeshProUGUI>().text = chosenPhrase;
-        phrasesSaid.Add(chosenPhrase);
-        helper.phrases.Remove(chosenPhrase);
-
-        hideCoroutine = StartCoroutine(HideAfterDelay(5f)); // Adjust the delay as needed
-    }
-
 
     public void HideWhenObjClicked()
     {
@@ -82,7 +70,45 @@ public class HelperManager : MonoBehaviour
         helperPanel.SetActive(false);
         helperImage.transform.position = initialPosition;
         reachedPosition = false; // Reset reachedPosition if you want to allow re-triggering
-        helper.joinPhrases(phrasesSaid);
+    }
+
+
+    private void PopulateScrollWithQuestions(RectTransform rectTransform)
+    {
+        for(int i = 0; i < helper.questions.Count; i++)
+        {
+            string currentQuestion = helper.questions[i];
+            GameObject newQuestionGO = Instantiate(questionPanelPrefab, rectTransform);
+            newQuestionGO.GetComponentInChildren<Button>().onClick
+                .AddListener(delegate { onQuestionClick(currentQuestion); });
+            newQuestionGO.GetComponentInChildren<Button>()
+                .GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion;
+        }
+    }
+
+
+    private void onQuestionClick(string question)
+    {
+
+        helperQuestionScrollView.gameObject.SetActive(false);
+
+        Debug.Log(question);
+        int questionIndex = helper.questions.IndexOf(question);
+        Debug.Log(questionIndex);
+        string anwserFound = helper.answers[questionIndex];
+
+        questionTitle.SetActive(true);
+        questionTitle.GetComponent<TextMeshProUGUI>().text = question;
+
+        anwserDescription.SetActive(true);
+        anwserDescription.GetComponent<TextMeshProUGUI>().text = anwserFound;
+
+        okBTN.SetActive(true);
+    }
+
+    public void onExitClick()
+    {
+        StartCoroutine(HideAfterDelay(0f));
     }
 
     public bool isHelperTalking()
