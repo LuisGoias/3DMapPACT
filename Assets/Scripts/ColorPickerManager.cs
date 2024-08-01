@@ -8,6 +8,8 @@ public class ColorPickerManager : MonoBehaviour
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private ColorPicker _colorPicker;
 
+
+
     private Color _color;
     private Ray _ray;
     private RaycastHit _hit;

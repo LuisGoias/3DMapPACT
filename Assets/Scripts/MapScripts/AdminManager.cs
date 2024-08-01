@@ -31,6 +31,7 @@ public class AdminManager : MonoBehaviour
     [SerializeField] private GameObject materialListPanel;
     [SerializeField] private ScrollRect materialListScrollView;
     [SerializeField] private GameObject materialPanelPrefab;
+    [SerializeField] private GameObject materialCube;
 
     [SerializeField] private GameObject colorPickerPanel;
 
@@ -293,13 +294,31 @@ public class AdminManager : MonoBehaviour
 
     public void ClickListMaterial()
     {
+        RectTransform rectTransform = materiaContentRectTransform;
+
+        List<GameObject> materialsToRemove = new List<GameObject>();
+        //TODO Listar materials 
+        if (rectTransform.childCount > 0 )
+        {
+            for(int i = 0; i < rectTransform.childCount; i++)
+            {
+                if(rectTransform.GetChild(i).name == "MaterialListed(Clone)")
+                {
+                    materialsToRemove.Add(rectTransform.GetChild(i).gameObject);
+                }
+            }
+
+            for (int i = 0; i < materialsToRemove.Count; i++)
+            {
+                DestroyImmediate(materialsToRemove[i]);
+            }
+        }
+
+        materiaContentRectTransform = rectTransform;
+
         string folderPath = "Assets/Materials"; // Replace with your folder path
         materials = LoadAllMaterials(folderPath);
 
-        foreach (var obj in materials)
-        {
-            Debug.Log(obj.name);
-        }
 
         PopulateScrollWithMaterials(materiaContentRectTransform);
     }
@@ -347,9 +366,10 @@ public class AdminManager : MonoBehaviour
 
     private void OnMaterialClick(Material materialChosen)
     {
-        GameObject.Find("BuildingCube").GetComponent<MeshRenderer>().material = materialChosen;
+        materialCube.GetComponent<MeshRenderer>().material = materialChosen;
         materialListPanel.SetActive(false);
         colorPickerPanel.SetActive(true);
+        materialCube.SetActive(true);
         colorPickerManager.SetChoseMaterial(materialChosen);
     }
 
