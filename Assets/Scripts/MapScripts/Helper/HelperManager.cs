@@ -92,9 +92,7 @@ public class HelperManager : MonoBehaviour
 
         helperQuestionScrollView.gameObject.SetActive(false);
 
-        Debug.Log(question);
         int questionIndex = helper.questions.IndexOf(question);
-        Debug.Log(questionIndex);
         string anwserFound = helper.answers[questionIndex];
 
         questionTitle.SetActive(true);
@@ -119,4 +117,8 @@ public class HelperManager : MonoBehaviour
         }
         return false;
     }
+
+    public HelperSerialize GetHelperSerialize() { return helper; }
+    
+    public void SetHelperSerialize(HelperSerialize newHelper) { helper = newHelper; }
 }

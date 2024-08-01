@@ -22,6 +22,12 @@ public class AdminManager : MonoBehaviour
     [SerializeField] private GameObject officeInfoTitle;
     [SerializeField] private GameObject officeInfoDescription;
 
+    [SerializeField] private GameObject helperValuesPanelPrefab;
+    [SerializeField] private GameObject helperAddMoreValuesBTN;
+    [SerializeField] private ScrollRect helperValuesScroll;
+
+
+
     [SerializeField] private GameObject materialListPanel;
     [SerializeField] private ScrollRect materialListScrollView;
     [SerializeField] private GameObject materialPanelPrefab;
@@ -29,6 +35,7 @@ public class AdminManager : MonoBehaviour
     [SerializeField] private GameObject colorPickerPanel;
 
     private List<InformationSerialize> informationOffices = new List<InformationSerialize>();
+    private HelperSerialize helper;
     private List<Material> materials = new List<Material>();
 
     private string path;
@@ -44,6 +51,7 @@ public class AdminManager : MonoBehaviour
 
     private RectTransform officeContentRectTransform;
     private RectTransform materiaContentRectTransform;
+    private RectTransform helperContentRectTransform;
 
 
     private ColorPickerManager colorPickerManager;
@@ -55,9 +63,10 @@ public class AdminManager : MonoBehaviour
     {
         officeContentRectTransform = officeListScroll.content;
         materiaContentRectTransform = materialListScrollView.content;
+        helperContentRectTransform = helperValuesScroll.content;
 
         colorPickerManager = GameObject.Find("ColorPickerManager").GetComponent<ColorPickerManager>();
-        fileManager = GameObject.Find("FileManager").GetComponent<FileManager>(); 
+        fileManager = GameObject.Find("FileManager").GetComponent<FileManager>();
     }
 
     // Update is called once per frame
@@ -71,29 +80,29 @@ public class AdminManager : MonoBehaviour
     public void ClickListOfficeChange()
     {
         //string folderPath = "Assets/Objects/Locations"; // Replace with your folder path
-        informationOffices = fileManager.LoadInformation();
+        informationOffices = fileManager.LoadInformationFile();
         PopulateScrollWithOffices(officeContentRectTransform);
     }
 
-   /* private static List<InformationObject> LoadAllScriptableObjects(string path)
-    {
-        // Get all asset paths from the folder
-        string[] assetPaths = AssetDatabase.FindAssets("t:" + typeof(InformationObject).Name, new[] { path });
-        List<InformationObject> scriptableObjects = new List<InformationObject>();
+    /* private static List<InformationObject> LoadAllScriptableObjects(string path)
+     {
+         // Get all asset paths from the folder
+         string[] assetPaths = AssetDatabase.FindAssets("t:" + typeof(InformationObject).Name, new[] { path });
+         List<InformationObject> scriptableObjects = new List<InformationObject>();
 
-        // Load each asset and add to the list
-        foreach (string assetPath in assetPaths)
-        {
-            string fullPath = AssetDatabase.GUIDToAssetPath(assetPath);
-            InformationObject obj = AssetDatabase.LoadAssetAtPath<InformationObject>(fullPath);
-            if (obj != null)
-            {
-                scriptableObjects.Add(obj);
-            }
-        }
+         // Load each asset and add to the list
+         foreach (string assetPath in assetPaths)
+         {
+             string fullPath = AssetDatabase.GUIDToAssetPath(assetPath);
+             InformationObject obj = AssetDatabase.LoadAssetAtPath<InformationObject>(fullPath);
+             if (obj != null)
+             {
+                 scriptableObjects.Add(obj);
+             }
+         }
 
-        return scriptableObjects;
-    }*/
+         return scriptableObjects;
+     }*/
 
 
     private void PopulateScrollWithOffices(RectTransform rectTransform)
@@ -131,7 +140,7 @@ public class AdminManager : MonoBehaviour
 
     public void OnOfficeInfoClickBack()
     {
-        for(int i = 0; i < informationOffices.Count; i++)
+        for (int i = 0; i < informationOffices.Count; i++)
         {
             if (informationOffices[i].gameObjectName == buildingToChange.gameObjectName)
             {
@@ -139,9 +148,9 @@ public class AdminManager : MonoBehaviour
 
             }
         }
-        fileManager.SaveInformation(informationOffices);
+        fileManager.SaveInformationFile(informationOffices);
 
-        for (int i = 0; i < informationOffices.Count;i++)
+        for (int i = 0; i < informationOffices.Count; i++)
         {
             Debug.Log(i + ":");
             Debug.Log(informationOffices[i].gameObjectName);
@@ -168,10 +177,11 @@ public class AdminManager : MonoBehaviour
 
     private void SetAdminTitleChanged(GameObject gameObject)
     {
-        if(gameObject.name == "InformationTitleFieldTMP")
+        if (gameObject.name == "InformationTitleFieldTMP")
         {
             adminTitleChanged = true;
-        } else
+        }
+        else
         {
             adminTitleChanged = false;
         }
@@ -187,7 +197,7 @@ public class AdminManager : MonoBehaviour
             new ExtensionFilter("Image Files", "png", "jpg", "jpeg" )
         };
         var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", extensions, true);
-        
+
         path = "";
         foreach (var p in paths)
         {
@@ -247,7 +257,7 @@ public class AdminManager : MonoBehaviour
             {
                 image = officeBanner.GetComponentInChildren<Image>();
                 image.sprite = newSprite;
-                if(image.sprite != null)
+                if (image.sprite != null)
                 {
                     Debug.Log("yay");
                     Debug.Log(image.sprite);
@@ -271,7 +281,8 @@ public class AdminManager : MonoBehaviour
         if (adminTitleChanged)
         {
             buildingToChange.title = gameObject.GetComponent<TMP_InputField>().text;
-        } else
+        }
+        else
         {
             buildingToChange.description = gameObject.GetComponent<TMP_InputField>().text;
         }
@@ -279,7 +290,7 @@ public class AdminManager : MonoBehaviour
     #endregion
 
     #region List Material
-    
+
     public void ClickListMaterial()
     {
         string folderPath = "Assets/Materials"; // Replace with your folder path
@@ -342,5 +353,158 @@ public class AdminManager : MonoBehaviour
         colorPickerManager.SetChoseMaterial(materialChosen);
     }
 
+    #endregion
+
+    #region HelperChange
+    public void ClickHelperChange()
+    {
+        helper = fileManager.LoadHelperFile();
+        PopulateScrollWithHelperValues(helperContentRectTransform);
+    }
+
+    private void PopulateScrollWithHelperValues(RectTransform rectTransform)
+    {
+        for (int i = 0; i < helper.questions.Count; i++)
+        {
+            GameObject newHelperValuesGO = Instantiate(helperValuesPanelPrefab, rectTransform);
+
+            int currentIndex = i+1;
+            string helperQuestion = helper.questions[i];
+            string helperAnwsers = helper.answers[i];
+
+            newHelperValuesGO.transform.Find("QuestionNumber")
+                .GetComponent<TextMeshProUGUI>().text = "Pergunta #" + currentIndex;
+
+            newHelperValuesGO.transform.Find("QuestionInputField")
+                .GetComponent<TMP_InputField>().text = helperQuestion;
+
+            newHelperValuesGO.transform.Find("AnwserNumber")
+                .GetComponent<TextMeshProUGUI>().text = "Resposta #" + currentIndex;
+
+            newHelperValuesGO.transform.Find("AnwserInputField")
+                .GetComponent<TMP_InputField>().text = helperAnwsers;
+
+            newHelperValuesGO.transform.Find("RemoveValueBTN")
+                .GetComponent<Button>().onClick
+                .AddListener(delegate { RemoveValueFromHelper(newHelperValuesGO); });
+        }
+        helperAddMoreValuesBTN.transform.SetAsLastSibling();
+    }
+
+
+    public void OnHelperBackClick()
+    {
+        RectTransform recTransform = helperContentRectTransform;
+
+        List<GameObject> helperValuePanels = new List<GameObject>();
+
+        for (int i = 0; i < recTransform.childCount; i++)
+        {
+            if(recTransform.GetChild(i).name == "HelperValuesPanel(Clone)")
+            {
+                helperValuePanels.Add(recTransform.GetChild(i).gameObject);
+            }
+        }
+
+        List<string> savedQuestions = new List<string>();
+        List<string> savedAnwsers = new List<string>();
+
+        for (int i = 0; i < helperValuePanels.Count; i++)
+        {
+            string foundQuestion = helperValuePanels[i]
+                .transform.Find("QuestionInputField")
+                .GetComponent<TMP_InputField>().text;
+
+            string foundAnwser = helperValuePanels[i]
+                .transform.Find("AnwserInputField")
+                .GetComponent<TMP_InputField>().text;
+
+            savedQuestions.Add(foundQuestion);
+            savedAnwsers.Add(foundAnwser);
+        }
+
+        helper.setQuestions(savedQuestions);
+        helper.setAnswers(savedAnwsers);
+
+        fileManager.SaveHelperFile(helper);
+
+
+        for (int i = 0; i < helperValuePanels.Count; i++)
+        {
+            Destroy(helperValuePanels[i]);
+        }
+    }
+
+    public void AddNewValueToHelper()
+    {
+        RectTransform rectTransform = helperContentRectTransform;
+
+
+        List<GameObject> helperValuePanels = new List<GameObject>();
+
+        for (int i = 0; i < rectTransform.childCount; i++)
+        {
+            if (rectTransform.GetChild(i).name == "HelperValuesPanel(Clone)")
+            {
+                helperValuePanels.Add(rectTransform.GetChild(i).gameObject);
+            }
+        }
+
+        GameObject newValueGO = Instantiate(helperValuesPanelPrefab, rectTransform);
+
+        newValueGO.transform.Find("QuestionNumber")
+            .GetComponent<TextMeshProUGUI>().text = "Pergunta #" + (helperValuePanels.Count + 1);
+
+        newValueGO.transform.Find("QuestionInputField")
+            .GetComponent<TMP_InputField>().text = "";
+
+        newValueGO.transform.Find("AnwserNumber")
+            .GetComponent<TextMeshProUGUI>().text = "Resposta #" + (helperValuePanels.Count + 1);
+
+        newValueGO.transform.Find("AnwserInputField")
+            .GetComponent<TMP_InputField>().text = "";
+
+        newValueGO.transform.Find("RemoveValueBTN")
+            .GetComponent<Button>().onClick
+            .AddListener(delegate { RemoveValueFromHelper(newValueGO); });
+
+        helperAddMoreValuesBTN.transform.SetAsLastSibling();
+
+        helperContentRectTransform = rectTransform;
+
+    }
+
+
+    public void RemoveValueFromHelper(GameObject valueToRemove)
+    {
+        DestroyImmediate(valueToRemove);
+
+        RectTransform rectTransform = helperContentRectTransform;
+
+        List<GameObject> helperValuePanels = new List<GameObject>();
+
+        for (int i = 0; i < rectTransform.childCount; i++)
+        {
+            if (rectTransform.GetChild(i).name == "HelperValuesPanel(Clone)")
+            {
+                helperValuePanels.Add(rectTransform.GetChild(i).gameObject);
+            }
+        }
+
+        Debug.Log(helperValuePanels.Count);
+
+        for (int i = 0; i < helperValuePanels.Count; i++)
+        {
+            int currentIndex = i + 1;
+            helperValuePanels[i].transform.Find("QuestionNumber")
+                .GetComponent<TextMeshProUGUI>().text = "Pergunta #" + currentIndex;
+
+            helperValuePanels[i].transform.Find("AnwserNumber")
+                .GetComponent<TextMeshProUGUI>().text = "Resposta #" + currentIndex;
+        }
+
+        helperContentRectTransform = rectTransform;
+
+    }
     #endregion
 }

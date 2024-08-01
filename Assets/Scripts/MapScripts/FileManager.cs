@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,30 +7,46 @@ using UnityEngine.SceneManagement;
 
 public class FileManager : MonoBehaviour
 {
-    private string filePath;
+    private string officeInfoFilePath;
+    private string helperFilePath;
 
     [SerializeField] private List<GameObject> buildings;
 
     private List<InformationSerialize> offices;
 
+    private HelperSerialize helper;
+
     private void Awake()
     {
-        filePath = Application.persistentDataPath + "/informationData.json";
-        offices = LoadInformation();
+        officeInfoFilePath = Application.persistentDataPath + "/informationData.json";
+        offices = LoadInformationFile();
 
-        Debug.Log(filePath);
+        helperFilePath = Application.persistentDataPath + "/helperData.json";
+        helper = LoadHelperFile();
+
+        //Debug.Log(officeInfoFilePath);
+        Debug.Log(helperFilePath);
         if (SceneManager.GetActiveScene().name == "MapScene")
         {
             if (offices == null || offices.Count == 0)
             {
                 Debug.Log("Saved");
-                SaveNewFile();
+                SaveNewInfo();
             }
             else
             {
                 Debug.Log("Loaded");
-                LoadExistingFile();
+                LoadInfo();
             }
+
+            if(helper.questions == null && helper.answers == null)
+            {
+                SaveHelper();
+            } else
+            {
+                LoadHelper();
+            }
+            
         }
     }
 
@@ -38,23 +55,44 @@ public class FileManager : MonoBehaviour
         // Start is kept for any future use
     }
 
-    public void SaveInformation(List<InformationSerialize> infoList)
+    #region Save/Load JSON
+    public void SaveInformationFile(List<InformationSerialize> infoList)
     {
         string json = JsonUtility.ToJson(new SerializationWrapper<InformationSerialize>(infoList));
-        File.WriteAllText(filePath, json);
+        File.WriteAllText(officeInfoFilePath, json);
     }
 
-    public List<InformationSerialize> LoadInformation()
+    public List<InformationSerialize> LoadInformationFile()
     {
-        if (File.Exists(filePath))
+        if (File.Exists(officeInfoFilePath))
         {
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(officeInfoFilePath);
             return JsonUtility.FromJson<SerializationWrapper<InformationSerialize>>(json).data;
         }
         return new List<InformationSerialize>();
     }
 
-    private void SaveNewFile()
+
+    public void SaveHelperFile(HelperSerialize helperToSave)
+    {
+        string json = JsonUtility.ToJson(helperToSave);
+        File.WriteAllText(helperFilePath, json);
+    }
+
+    public HelperSerialize LoadHelperFile()
+    {
+        if (File.Exists(helperFilePath))
+        {
+            string json = File.ReadAllText(helperFilePath);
+            return JsonUtility.FromJson<HelperSerialize>(json);
+        }
+        return new HelperSerialize();
+    }
+
+    #endregion
+
+    #region Info Save and Load functions
+    private void SaveNewInfo()
     {
         offices = new List<InformationSerialize>();
         for (int i = 0; i < buildings.Count; i++)
@@ -77,10 +115,10 @@ public class FileManager : MonoBehaviour
                 Debug.LogWarning($"BuildingInside not found for {buildings[i].name}");
             }
         }
-        SaveInformation(offices);
+        SaveInformationFile(offices);
     }
 
-    private void LoadExistingFile()
+    private void LoadInfo()
     {
         for (int i = 0; i < buildings.Count; i++)
         {
@@ -107,6 +145,28 @@ public class FileManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Helper Save and Load functions
+    private void SaveHelper()
+    {
+        helper = new HelperSerialize();
+
+        helper = GameObject.Find("HelperManager")
+            .GetComponent<HelperManager>().GetHelperSerialize();
+
+        SaveHelperFile(helper);
+    }
+
+
+    private void LoadHelper()
+    {
+        GameObject.Find("HelperManager")
+            .GetComponent<HelperManager>().SetHelperSerialize(helper);
+    }
+
+    #endregion
 
     [System.Serializable]
     private class SerializationWrapper<T>
