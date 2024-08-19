@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,7 +21,8 @@ public class ClickOnObject : MonoBehaviour
 
     [SerializeField] private GameObject goBackButton;
     [SerializeField] private GameObject helpButton;
-
+    [SerializeField] private GameObject searchButton;
+    [SerializeField] private GameObject currentLocationTMP;
 
     [SerializeField] private List<GameObject> buildingCubes;
 
@@ -47,9 +49,9 @@ public class ClickOnObject : MonoBehaviour
         originalPosition = insideCamera.transform.position;
         originalRotation = insideCamera.transform.rotation;
 
-        informationImage.GetComponentInChildren<Image>().sprite = building.icon;
+        informationImage.GetComponentInChildren<Image>().sprite = GetOfficeImageFromPath(building.iconPath);
 
-        for(int i = 0; i < buildingCubes.Count; i++)
+        for (int i = 0; i < buildingCubes.Count; i++)
         {
             buildingCubes[i].GetComponentInChildren<MeshRenderer>().material = building.typeOfBuilding;
         }
@@ -93,6 +95,8 @@ public class ClickOnObject : MonoBehaviour
         }
     }
 
+
+
     /*
     void LookAtObject(GameObject target)
     {
@@ -104,16 +108,40 @@ public class ClickOnObject : MonoBehaviour
     {
         goBackButton.SetActive(false);
         helpButton.SetActive(false);
+        searchButton.SetActive(false);
+        currentLocationTMP.SetActive(false);
+
+
         clickedOnObject = true;
         informationPanel.gameObject.SetActive(true);
         informationScroll.gameObject.SetActive(true);
 
-        informationBanner.GetComponentInChildren<Image>().sprite = building.banner;
+        informationBanner.GetComponentInChildren<Image>().sprite = 
+            GetOfficeImageFromPath(building.bannerPath);
         informationTitle.GetComponentInChildren<TextMeshProUGUI>().text = building.title;
         informationDescription.GetComponentInChildren<TextMeshProUGUI>().text = building.description;
 
     }
+    private Sprite GetOfficeImageFromPath(string currentOfficePath)
+    {
+        if (string.IsNullOrEmpty(currentOfficePath)) return null;
 
+        string temporaryPath = currentOfficePath.Trim();
+
+        var fileData = File.ReadAllBytes(temporaryPath);
+
+
+        var textureImage = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        textureImage.LoadImage(fileData);
+
+
+
+        Sprite spriteTranslated = Sprite.Create(textureImage,
+            new Rect(0.0f, 0.0f, textureImage.width, textureImage.height),
+            new Vector2(0.5f, 0.5f), 100.0f);
+
+        return spriteTranslated;
+    }
 
     public InformationSerialize getBuilding() { return building; }
 

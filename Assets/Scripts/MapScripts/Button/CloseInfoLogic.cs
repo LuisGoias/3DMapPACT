@@ -14,6 +14,8 @@ public class CloseInfoLogic : MonoBehaviour
 
     [SerializeField] private GameObject goBackButton;
     [SerializeField] private GameObject helpButton;
+    [SerializeField] private GameObject searchButton;
+    [SerializeField] private GameObject currentLocationTMP;
     public void onClickClose()
     {
         informationPanel.gameObject.SetActive(false);
@@ -25,6 +27,8 @@ public class CloseInfoLogic : MonoBehaviour
 
         goBackButton.SetActive(true);
         helpButton.SetActive(true);
+        searchButton.SetActive(true);
+        currentLocationTMP.SetActive(true);
 
     }
 }

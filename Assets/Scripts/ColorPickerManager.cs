@@ -35,7 +35,7 @@ public class ColorPickerManager : MonoBehaviour
             _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(_ray, out _hit, 100))
             {
-                _colorPicker.Open(_color);
+               _colorPicker.Open(_color);
             }
         }
     }

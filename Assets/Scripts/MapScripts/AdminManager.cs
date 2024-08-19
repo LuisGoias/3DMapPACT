@@ -80,9 +80,22 @@ public class AdminManager : MonoBehaviour
     #region List Office
     public void ClickListOfficeChange()
     {
-        //string folderPath = "Assets/Objects/Locations"; // Replace with your folder path
+        string folderPath = "Assets/Objects/Locations"; // Replace with your folder path
         informationOffices = fileManager.LoadInformationFile();
+        ResetOfficeScroll(officeContentRectTransform);
         PopulateScrollWithOffices(officeContentRectTransform);
+    }
+
+    private void ResetOfficeScroll(RectTransform rectTransform)
+    {
+        if(rectTransform.childCount > 0)
+        {
+            for (int i = 0;  i < rectTransform.childCount; i++)
+            {
+                Destroy(rectTransform.GetChild(i).gameObject);
+            }
+            informationOffices = fileManager.LoadInformationFile();
+        }
     }
 
     /* private static List<InformationObject> LoadAllScriptableObjects(string path)
@@ -115,7 +128,7 @@ public class AdminManager : MonoBehaviour
             InformationSerialize currentObject = informationOffices[i];
 
             newOfficeSearchGO.transform.Find("OfficeImage")
-                .GetComponent<Image>().sprite = currentObject.icon;
+                .GetComponent<Image>().sprite = GetOfficeIconFromPath(currentObject);
 
             newOfficeSearchGO.transform.Find("OfficeTitle")
                 .GetComponent<TextMeshProUGUI>().text = currentObject.title;
@@ -132,11 +145,55 @@ public class AdminManager : MonoBehaviour
         officeListPanel.SetActive(false);
         officeInfoPanel.SetActive(true);
 
-        officeBanner.GetComponent<Image>().sprite = buildingToChange.banner;
-        officeIcon.GetComponent<Image>().sprite = buildingToChange.icon;
+        officeBanner.GetComponent<Image>().sprite = GetOfficeBannerFromPath(buildingToChange);
+        officeIcon.GetComponent<Image>().sprite = GetOfficeIconFromPath(buildingToChange);
         officeInfoTitle.GetComponent<TMP_InputField>().text = buildingToChange.title;
         officeInfoDescription.GetComponent<TMP_InputField>().text = buildingToChange.description;
     }
+
+    private Sprite GetOfficeIconFromPath(InformationSerialize currentOffice)
+    {
+        if (currentOffice.iconPath == "") return null;
+
+        string temporaryPath = currentOffice.iconPath.Trim();
+
+        var fileData = File.ReadAllBytes(temporaryPath);
+
+
+        var textureImage = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        textureImage.LoadImage(fileData);
+
+
+
+        Sprite spriteToChange = Sprite.Create(textureImage,
+            new Rect(0.0f, 0.0f, textureImage.width, textureImage.height),
+            new Vector2(0.5f, 0.5f), 100.0f);
+
+        return spriteToChange;
+    }
+
+    private Sprite GetOfficeBannerFromPath(InformationSerialize currentOffice)
+    {
+        if (currentOffice.bannerPath == "") return null;
+
+        string temporaryPath = currentOffice.bannerPath.Trim();
+
+        var fileData = File.ReadAllBytes(temporaryPath);
+
+
+        var textureImage = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        textureImage.LoadImage(fileData);
+
+
+
+        Sprite spriteToChange = Sprite.Create(textureImage,
+            new Rect(0.0f, 0.0f, textureImage.width, textureImage.height),
+            new Vector2(0.5f, 0.5f), 100.0f);
+
+        return spriteToChange;
+    }
+
+
 
 
     public void OnOfficeInfoClickBack()
@@ -158,6 +215,11 @@ public class AdminManager : MonoBehaviour
             Debug.Log(informationOffices[i].title);
             Debug.Log(informationOffices[i].description);
         }
+
+        ResetOfficeScroll(officeContentRectTransform);
+        PopulateScrollWithOffices(officeContentRectTransform);
+
+
     }
 
 
@@ -260,16 +322,16 @@ public class AdminManager : MonoBehaviour
                 image.sprite = newSprite;
                 if (image.sprite != null)
                 {
-                    Debug.Log("yay");
-                    Debug.Log(image.sprite);
-                    buildingToChange.SetBanner(image.sprite);
+                    buildingToChange.SetBannerPath(path);
+                    //buildingToChange.SetBanner(image.sprite);
                 }
             }
             else
             {
                 image = officeIcon.GetComponentInChildren<Image>();
                 image.sprite = newSprite;
-                buildingToChange.SetIcon(newSprite);
+                buildingToChange.SetIconPath(path);
+                //buildingToChange.SetIcon(newSprite);
             }
         }
     }

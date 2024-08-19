@@ -24,6 +24,13 @@ public class ClickOnMainBuilding : MonoBehaviour
     [SerializeField] private GameObject goBackButton;
     [SerializeField] private GameObject locationTMP;
 
+    [SerializeField] private List<Material> materialOutlinePicked;
+    [SerializeField] private List<Material> materialsOutlineDefault;
+
+    [SerializeField] private GameObject enterBuildingBTN;
+
+
+    private GameObject previousClickedObject;
 
     private MouseManager mouseManager;
     private CameraManager cameraManager;
@@ -62,11 +69,48 @@ public class ClickOnMainBuilding : MonoBehaviour
             {
                 helperManager.HideWhenObjClicked();
             }
-            StartCoroutine(ZoomInBuildingCoroutine(2f)); // Zoom in for 2 seconds
+            AddOutLine();
+            //StartCoroutine(ZoomInBuildingCoroutine(2f)); // Zoom in for 2 seconds
         }
     }
 
-    IEnumerator ZoomInBuildingCoroutine(float duration)
+    private void AddOutLine()
+    {
+        int lastChildIndex = clickedBuilding.transform.childCount - 1;
+        Transform outlineParent = clickedBuilding.transform.GetChild(lastChildIndex);
+        for (int i = 0; i < outlineParent.transform.childCount; i++)
+        {
+            if(outlineParent.transform.GetChild(i).GetComponent<MeshRenderer>() != null)
+            {
+                Transform currentChild = outlineParent.transform.GetChild(i);
+                currentChild.GetComponent<MeshRenderer>().SetMaterials(materialOutlinePicked);
+            }
+        }
+
+        if(previousClickedObject != null)
+        {
+            for (int i = 0; i < previousClickedObject.transform.childCount; i++)
+            {
+                if (previousClickedObject.transform.GetChild(i).GetComponent<MeshRenderer>() != null)
+                {
+                    Transform currentChild = previousClickedObject.transform.GetChild(i);
+                    currentChild.GetComponent<MeshRenderer>().SetMaterials(materialsOutlineDefault);
+                }
+            }
+        }
+        previousClickedObject = outlineParent.gameObject;
+        enterBuildingBTN.SetActive(true);
+    }
+
+
+    public void OnEnterClick()
+    {
+        enterBuildingBTN.SetActive(false);
+        TeleportCameraToBuilding();
+    }
+
+
+    /*IEnumerator ZoomInBuildingCoroutine(float duration)
     {
         isZooming = true;
         float targetZoom = Mathf.Clamp(zoom - zoomMultiplier, minZoom, maxZoom);
@@ -83,7 +127,7 @@ public class ClickOnMainBuilding : MonoBehaviour
         GetComponent<Camera>().orthographicSize = targetZoom;
         isZooming = false;
         TeleportCameraToBuilding();
-    }
+    }*/
 
     void TeleportCameraToBuilding()
     {

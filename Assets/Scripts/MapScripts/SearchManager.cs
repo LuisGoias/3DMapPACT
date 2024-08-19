@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class SearchManager : MonoBehaviour
     [SerializeField] private GameObject searchBTN;
     [SerializeField] private GameObject helpBTN;
     [SerializeField] private GameObject goBackZoomBTN;
+    [SerializeField] private GameObject currentLocationTMP;
 
 
     private RectTransform searchScrollContentRectTransform;
@@ -59,7 +61,7 @@ public class SearchManager : MonoBehaviour
     {
         GameObject buildingInside = GameObject.Find(building.name + "Inside");
 
-        List<Sprite> images = new List<Sprite>();
+        List<string> imagesPath = new List<string>();
         List<string> titles = new List<string>();
         List<string> objectNames = new List<string>();
 
@@ -68,18 +70,18 @@ public class SearchManager : MonoBehaviour
             if (child.GetComponent<ClickOnObject>() != null)
             {
                 InformationSerialize buildingObject = child.GetComponent<ClickOnObject>().getBuilding();
-                images.Add(buildingObject.icon);
+                imagesPath.Add(buildingObject.iconPath);
                 titles.Add(buildingObject.title);
                 objectNames.Add(buildingObject.gameObjectName);
             }
         }
 
-        for (int i = 0; i < images.Count; i++)
+        for (int i = 0; i < imagesPath.Count; i++)
         {
             GameObject newOfficeSearchGO = Instantiate(officeSearchListPanelPrefab, rectTransform);
 
             newOfficeSearchGO.transform.Find("LogoImage")
-                .GetComponent<Image>().sprite = images[i];
+                .GetComponent<Image>().sprite = GetOfficeIconFromPath(imagesPath[i]);
 
             // Create a local copy of the loop variable to capture the correct value in the closure
             string objectName = objectNames[i];
@@ -137,6 +139,27 @@ public class SearchManager : MonoBehaviour
         }
     }
 
+    private Sprite GetOfficeIconFromPath(string currentOfficePath)
+    {
+        if (string.IsNullOrEmpty(currentOfficePath)) return null;
+
+        string temporaryPath = currentOfficePath.Trim();
+
+        var fileData = File.ReadAllBytes(temporaryPath);
+
+
+        var textureImage = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        textureImage.LoadImage(fileData);
+
+
+
+        Sprite spriteTranslated = Sprite.Create(textureImage,
+            new Rect(0.0f, 0.0f, textureImage.width, textureImage.height),
+            new Vector2(0.5f, 0.5f), 100.0f);
+
+        return spriteTranslated;
+    }
+
     public void onLogoClick(string name)
     {
         GameObject foundOffice = GameObject.Find(name);
@@ -171,6 +194,7 @@ public class SearchManager : MonoBehaviour
             newPosition.z = location.z;
             cameraManager.SetInsideCameraPosition(newPosition);
             goBackZoomBTN.SetActive(true);
+            currentLocationTMP.SetActive(true);
         }
     }
 }

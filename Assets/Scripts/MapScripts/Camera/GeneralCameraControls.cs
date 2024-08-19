@@ -37,13 +37,7 @@ public class GeneralCameraControls : MonoBehaviour
         if (Input.GetMouseButton(0) && mouseManager.getDragging())
         {
 
-            if (this.name == "InsideCamera" || this.name == "InsideCamera2")
-            {
-                MoveZAxis();
-            } else
-            {
-                MoveYAxis();
-            }
+            MoveZAxis();
 
         }
     }

@@ -24,9 +24,9 @@ public class ZoomLogic : MonoBehaviour
         // Initialize the slider values
         if (outsideCameraGameObject.activeSelf)
         {
-            slider.minValue = 3;
-            slider.maxValue = 5;
-            slider.value = outsideCamera.orthographicSize;
+            slider.minValue = 30;
+            slider.maxValue = 84;
+            slider.value = slider.maxValue;
         }
         else if (insideCameraGameObject.activeSelf)
         {
@@ -42,8 +42,8 @@ public class ZoomLogic : MonoBehaviour
         if (outsideCameraGameObject.activeSelf)
         {
             // Make sure the slider's range matches the outside camera settings
-            slider.minValue = 3;
-            slider.maxValue = 5;
+            slider.minValue = 30;
+            slider.maxValue = 84;
         }
         else if (insideCameraGameObject.activeSelf)
         {
@@ -57,7 +57,7 @@ public class ZoomLogic : MonoBehaviour
     {
         if (outsideCameraGameObject.activeSelf)
         {
-            outsideCamera.orthographicSize = value;
+            outsideCamera.fieldOfView = value;
         }
         else if (insideCameraGameObject.activeSelf)
         {

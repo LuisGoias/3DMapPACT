@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,7 @@ public class OfficeListingManager : MonoBehaviour
     private void PopulateScrollWithOffices(GameObject building, RectTransform rectTransform)
     {
         GameObject buildingInside = GameObject.Find(building.name + "Inside");
-        List<Sprite> images = new List<Sprite>();
+        List<string> imagePaths = new List<string>();
 
         foreach(Transform child in buildingInside.transform)
         {
@@ -35,14 +36,37 @@ public class OfficeListingManager : MonoBehaviour
             {
                 InformationSerialize buildingObject = 
                     child.GetComponent<ClickOnObject>().getBuilding();
-                images.Add(buildingObject.icon);
+                imagePaths.Add(buildingObject.iconPath);
             }
         }
 
-        for (int i = 0;  i < images.Count; i++)
+        for (int i = 0;  i < imagePaths.Count; i++)
         {
             GameObject newOfficeGO = Instantiate(officeImagePrefab, rectTransform);
-            newOfficeGO.GetComponent<Image>().sprite = images[i];
+            string currentPath = imagePaths[i];
+            newOfficeGO.GetComponent<Image>().sprite = GetOfficeIconFromPath(currentPath);
         }
+    }
+
+
+    private Sprite GetOfficeIconFromPath(string currentOfficePath)
+    {
+        if (string.IsNullOrEmpty(currentOfficePath)) return null;
+
+        string temporaryPath = currentOfficePath.Trim();
+
+        var fileData = File.ReadAllBytes(temporaryPath);
+
+
+        var textureImage = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        textureImage.LoadImage(fileData);
+
+
+
+        Sprite spriteTranslated = Sprite.Create(textureImage,
+            new Rect(0.0f, 0.0f, textureImage.width, textureImage.height),
+            new Vector2(0.5f, 0.5f), 100.0f);
+
+        return spriteTranslated;
     }
 }
