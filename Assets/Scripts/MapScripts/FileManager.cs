@@ -110,6 +110,23 @@ public class FileManager : MonoBehaviour
                     }
                 }
             }
+
+            if (buildings[i].name == "PACT1")
+            {
+                GameObject buildingInside2 = GameObject.Find(buildings[i].name + "Inside2");
+                if (buildingInside2 != null)
+                {
+                    foreach (Transform child in buildingInside2.transform)
+                    {
+                        if (child.GetComponent<ClickOnObject>() != null)
+                        {
+                            InformationSerialize buildingObject = child.GetComponent<ClickOnObject>().getBuilding();
+                            offices.Add(buildingObject);
+                        }
+                    }
+                }
+            }
+
             else
             {
                 Debug.LogWarning($"BuildingInside not found for {buildings[i].name}");

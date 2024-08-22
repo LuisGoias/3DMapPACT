@@ -7,9 +7,11 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private GameObject outsideCameraGameObject;
     [SerializeField] private GameObject insideCameraGameObject;
     [SerializeField] private GameObject insideCamera2GameObject;
+    [SerializeField] private GameObject insideCamera3GameObject;
 
 
     private Vector3 insideCameraInactivePosition = new Vector3(50, 10, -2.14f);
+    private Vector3 insideCamera3InactivePosition = new Vector3(7030, 10, 272f);
 
     private GameObject currentLocation;
 
@@ -17,6 +19,8 @@ public class CameraManager : MonoBehaviour
     public GameObject getOutsideCameraGO () { return outsideCameraGameObject; }
     public GameObject getInsideCameraGO () { return insideCameraGameObject; }
     public GameObject getInside2CameraGO () { return insideCamera2GameObject; }
+
+    public GameObject getInside3CameraGO () { return insideCamera3GameObject; }
 
 
     public bool isOutsideActive()
@@ -34,6 +38,11 @@ public class CameraManager : MonoBehaviour
         return insideCamera2GameObject.activeSelf;
     }
 
+    public bool isInside3Active()
+    {
+        return insideCamera3GameObject.activeSelf;
+    }
+
 
     public void SetOutsideCameraMain()
     {
@@ -45,6 +54,12 @@ public class CameraManager : MonoBehaviour
         } else if (isInside2Active()) {
             insideCamera2GameObject.SetActive(false);
             insideCamera2GameObject.tag = "Untagged";
+        }
+        else if (isInside3Active())
+        {
+            insideCamera3GameObject.SetActive(false);
+            insideCamera3GameObject.tag = "Untagged";
+            SetInsideCamera3ToInactivePosition();
         }
 
         outsideCameraGameObject.SetActive(true);
@@ -63,6 +78,12 @@ public class CameraManager : MonoBehaviour
             insideCamera2GameObject.SetActive(false);
             insideCamera2GameObject.tag = "Untagged";
         }
+        else if (isInside3Active())
+        {
+            insideCamera3GameObject.SetActive(false);
+            insideCamera3GameObject.tag = "Untagged";
+            SetInsideCamera3ToInactivePosition();
+        }
 
         insideCameraGameObject.SetActive(true);
         insideCameraGameObject.tag = "MainCamera";
@@ -76,6 +97,12 @@ public class CameraManager : MonoBehaviour
             insideCameraGameObject.tag = "Untagged";
             SetInsideCameraToInactivePosition();
         }
+        else if (isInside3Active())
+        {
+            insideCamera3GameObject.SetActive(false);
+            insideCamera3GameObject.tag = "Untagged";
+            SetInsideCamera3ToInactivePosition();
+        }
         else if (isOutsideActive())
         {
             outsideCameraGameObject.SetActive(false);
@@ -86,15 +113,48 @@ public class CameraManager : MonoBehaviour
         insideCamera2GameObject.tag = "MainCamera";
     }
 
+    public void SetInside3CameraMain()
+    {
+        if (isInsideActive())
+        {
+            insideCameraGameObject.SetActive(false);
+            insideCameraGameObject.tag = "Untagged";
+            SetInsideCameraToInactivePosition();
+        }
+        else if (isOutsideActive())
+        {
+            outsideCameraGameObject.SetActive(false);
+            outsideCameraGameObject.tag = "Untagged";
+        }
+        else if (isInside2Active())
+        {
+            insideCamera2GameObject.SetActive(false);
+            insideCamera2GameObject.tag = "Untagged";
+        }
+
+        insideCamera3GameObject.SetActive(true);
+        insideCamera3GameObject.tag = "MainCamera";
+    }
+
 
     public void SetInsideCameraPosition(Vector3 newPosition)
     {
         insideCameraGameObject.transform.position = newPosition;
     }
 
+    public void SetInsideCamera3Position(Vector3 newPosition)
+    {
+        insideCamera3GameObject.transform.position = newPosition;
+    }
+
     public void SetInsideCameraToInactivePosition()
     {
         insideCameraGameObject.transform.position = insideCameraInactivePosition;
+    }
+
+    public void SetInsideCamera3ToInactivePosition()
+    {
+        insideCamera3GameObject.transform.position = insideCamera3InactivePosition;
     }
 
 

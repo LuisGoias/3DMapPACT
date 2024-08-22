@@ -60,7 +60,7 @@ public class GeneralCameraControls : MonoBehaviour
     {
         Vector3 delta = Input.mousePosition - lastMousePosition;
 
-        Vector3 newPosition = Camera.main.transform.position - new Vector3(delta.x * Time.deltaTime, 0, delta.y * Time.deltaTime);
+        Vector3 newPosition = Camera.main.transform.position - new Vector3((delta.x * Time.deltaTime)*cameraSpeed, 0, (delta.y * Time.deltaTime)*cameraSpeed);
 
         // Clamp the camera's position to the defined boundaries
         newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);

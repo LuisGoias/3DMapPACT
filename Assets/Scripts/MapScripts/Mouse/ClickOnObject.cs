@@ -49,7 +49,14 @@ public class ClickOnObject : MonoBehaviour
         originalPosition = insideCamera.transform.position;
         originalRotation = insideCamera.transform.rotation;
 
-        informationImage.GetComponentInChildren<Image>().sprite = GetOfficeImageFromPath(building.iconPath);
+        if(building.title == "Empty")
+        {
+            informationImage.gameObject.SetActive(false);
+        } else
+        {
+            informationImage.GetComponentInChildren<Image>().sprite = GetOfficeImageFromPath(building.iconPath);
+        }
+
 
         for (int i = 0; i < buildingCubes.Count; i++)
         {
@@ -79,12 +86,16 @@ public class ClickOnObject : MonoBehaviour
                 }
                 else if (hit.collider.transform.parent.gameObject.name == building.gameObjectName)
                 {
+                    if(building.title == "Empty")
+                    {
+                        return;
+                    }
                     if (helperManager.isHelperTalking())
                     {
                         helperManager.HideWhenObjClicked();
                     }
 
-                        ShowInformationOfObject();
+                    ShowInformationOfObject();
                 }
             }
         }

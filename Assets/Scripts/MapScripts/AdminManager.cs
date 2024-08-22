@@ -378,7 +378,7 @@ public class AdminManager : MonoBehaviour
 
         materiaContentRectTransform = rectTransform;
 
-        string folderPath = "Assets/Materials"; // Replace with your folder path
+        string folderPath = "Assets/Materials/"; // Replace with your folder path
         materials = LoadAllMaterials(folderPath);
 
 
@@ -387,18 +387,16 @@ public class AdminManager : MonoBehaviour
 
     private static List<Material> LoadAllMaterials(string path)
     {
-        // Get all asset paths from the folder
-        string[] assetPaths = AssetDatabase.FindAssets("t:" + typeof(Material).Name, new[] { path });
+        Debug.Log(path);
+        Material[] materials = Resources.LoadAll<Material>("Materials");
         List<Material> materialsFound = new List<Material>();
 
-        // Load each asset and add to the list
-        foreach (string assetPath in assetPaths)
+        // Add each material to the list
+        foreach (Material material in materials)
         {
-            string fullPath = AssetDatabase.GUIDToAssetPath(assetPath);
-            Material obj = AssetDatabase.LoadAssetAtPath<Material>(fullPath);
-            if (obj != null)
+            if (material != null)
             {
-                materialsFound.Add(obj);
+                materialsFound.Add(material);
             }
         }
 

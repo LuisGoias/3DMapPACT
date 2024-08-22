@@ -64,6 +64,7 @@ public class SearchManager : MonoBehaviour
         List<string> imagesPath = new List<string>();
         List<string> titles = new List<string>();
         List<string> objectNames = new List<string>();
+        List<string> locations = new List<string>();
 
         foreach (Transform child in buildingInside.transform)
         {
@@ -73,6 +74,23 @@ public class SearchManager : MonoBehaviour
                 imagesPath.Add(buildingObject.iconPath);
                 titles.Add(buildingObject.title);
                 objectNames.Add(buildingObject.gameObjectName);
+                locations.Add(building.name + ".0 (Piso 0)");
+            }
+        }
+
+        if (building == pact1)
+        {
+            GameObject buildingInside2 = GameObject.Find(building.name + "Inside2");
+            foreach (Transform child in buildingInside2.transform)
+            {
+                if (child.GetComponent<ClickOnObject>() != null)
+                {
+                    InformationSerialize buildingObject = child.GetComponent<ClickOnObject>().getBuilding();
+                    imagesPath.Add(buildingObject.iconPath);
+                    titles.Add(buildingObject.title);
+                    objectNames.Add(buildingObject.gameObjectName);
+                    locations.Add(building.name + ".0 (Piso 1)");
+                }
             }
         }
 
@@ -93,15 +111,8 @@ public class SearchManager : MonoBehaviour
                 .GetComponent<TextMeshProUGUI>().text = titles[i];
             newOfficeSearchGO.transform.Find("OfficeNameTMP")
                 .GetComponent<TextMeshProUGUI>().name = objectNames[i];
-
-            if (buildingInside.name == "Pact1Inside2")
-            {
-                newOfficeSearchGO.transform.Find("LocationNameTMP").GetComponent<TextMeshProUGUI>().text = building.name + ".0 (Piso 1)";
-            }
-            else
-            {
-                newOfficeSearchGO.transform.Find("LocationNameTMP").GetComponent<TextMeshProUGUI>().text = building.name + ".0 (Piso 0)";
-            }
+            newOfficeSearchGO.transform.Find("LocationNameTMP")
+                .GetComponent<TextMeshProUGUI>().text = locations[i];
         }
     }
 

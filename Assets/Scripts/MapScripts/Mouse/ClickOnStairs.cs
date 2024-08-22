@@ -27,7 +27,7 @@ public class ClickOnStairs : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             if (Input.GetMouseButtonDown(0) &&
-                hit.collider.transform.parent.gameObject.name == "Stairs")
+                hit.collider.transform.gameObject.name == "Stairs")
             {
                 if (helperManager.isHelperTalking())
                 {
@@ -42,7 +42,7 @@ public class ClickOnStairs : MonoBehaviour
     {
 
 
-        GameObject insideBuilding = GameObject.Find("Pact1Inside2");
+        GameObject insideBuilding = GameObject.Find("PACT1Inside2");
 
         if (insideBuilding != null)
         {
@@ -50,7 +50,7 @@ public class ClickOnStairs : MonoBehaviour
             // Move the insideCamera to the same X position as the clicked building
             Vector3 newPosition = insideCamera2.transform.position;
             newPosition.x = insideBuilding.transform.position.x;
-            newPosition.y = 40f;
+            newPosition.z = insideBuilding.transform.position.z;
             insideCamera2.transform.position = newPosition;
 
             cameraManager.SetInside2CameraMain();

@@ -23,6 +23,13 @@ public class ZoomButtonLogic : MonoBehaviour
         } else if (cameraManager.isInsideActive()) 
         {
             slider.value += 5;
+        } else if (cameraManager.isInside2Active())
+        {
+            slider.value += 5;
+        }
+        else if (cameraManager.isInside3Active())
+        {
+            slider.value += 100;
         }
 
     }
@@ -36,6 +43,14 @@ public class ZoomButtonLogic : MonoBehaviour
         else if (cameraManager.isInsideActive())
         {
             slider.value -= 5;
+        }
+        else if (cameraManager.isInside2Active())
+        {
+            slider.value -= 5;
+        }
+        else if (cameraManager.isInside3Active())
+        {
+            slider.value -= 100;
         }
     }
 }

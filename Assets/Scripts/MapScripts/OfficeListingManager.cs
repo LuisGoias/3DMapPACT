@@ -7,16 +7,23 @@ using UnityEngine.UI;
 public class OfficeListingManager : MonoBehaviour
 {
     [SerializeField] private GameObject pact1;
+    [SerializeField] private GameObject pact3;
+
     [SerializeField] private ScrollRect pact1ScrollView;
+    [SerializeField] private ScrollRect pact3ScrollView;
+
     [SerializeField] private GameObject officeImagePrefab;
 
 
     private RectTransform pact1ContentRectTransform;
+    private RectTransform pact3ContentRectTransform;
     // Start is called before the first frame update
     void Start()
     {
         pact1ContentRectTransform = pact1ScrollView.content;
-        PopulateScrollWithOffices(pact1, pact1ContentRectTransform); 
+        pact1ContentRectTransform = pact3ScrollView.content;
+        PopulateScrollWithOffices(pact1, pact1ContentRectTransform);
+        PopulateScrollWithOffices(pact3, pact3ContentRectTransform);
     }
 
     // Update is called once per frame
@@ -26,19 +33,37 @@ public class OfficeListingManager : MonoBehaviour
     }
 
     private void PopulateScrollWithOffices(GameObject building, RectTransform rectTransform)
-    {
+    {        
         GameObject buildingInside = GameObject.Find(building.name + "Inside");
         List<string> imagePaths = new List<string>();
-
-        foreach(Transform child in buildingInside.transform)
+        
+        if(building == pact1)
         {
-            if(child.GetComponent<ClickOnObject>() != null)
+            foreach(Transform child in buildingInside.transform)
             {
-                InformationSerialize buildingObject = 
-                    child.GetComponent<ClickOnObject>().getBuilding();
-                imagePaths.Add(buildingObject.iconPath);
+                if(child.GetComponent<ClickOnObject>() != null)
+                {
+                    InformationSerialize buildingObject = 
+                        child.GetComponent<ClickOnObject>().getBuilding();
+                    imagePaths.Add(buildingObject.iconPath);
+                }
+            }
+
+            GameObject buildingInside2 = GameObject.Find(building.name + "Inside2");
+
+            foreach (Transform child in buildingInside2.transform)
+            {
+                if (child.GetComponent<ClickOnObject>() != null)
+                {
+                    InformationSerialize buildingObject =
+                        child.GetComponent<ClickOnObject>().getBuilding();
+                    imagePaths.Add(buildingObject.iconPath);
+                }
             }
         }
+
+
+
 
         for (int i = 0;  i < imagePaths.Count; i++)
         {
